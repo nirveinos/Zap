@@ -9,7 +9,7 @@ test = True
 pygame.init()
 display = pygame.display.set_mode((width, height),pygame.RESIZABLE)
 pygame.display.update()
-mymap = Map(10,9)
+mymap = Map(4,4)
 battery = Battery(10,mymap,(0,0))
 player = Player(mymap)
 wire1 = Wire((1, 0), ["LEFT", "DOWN"], mymap)

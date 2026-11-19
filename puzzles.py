@@ -35,7 +35,7 @@ class Wire():
       x,y = opperations
       targetColumn = col + x
       targetRow = row + y
-      if (0 <= targetRow <= self.__map.Height() and 0 <= targetColumn <= self.__map.Columns()):
+      if (0 <= targetRow < self.__map.Height() and 0 <= targetColumn < self.__map.Columns()):
         target = grid[targetColumn][targetRow]
       else:
         target = None
