@@ -3,7 +3,7 @@ pygame.init()
 
 
 class Wire():
-  def __init__(self,location,facing,map,num):
+  def __init__(self,location,facing,map):
     self.__location = location
     self.__map = map 
     self.__map.Place(self.__location,self)
@@ -11,14 +11,14 @@ class Wire():
     self.__resistance = 1
     self.__current = 0
     self.__facing = facing
-    self.__num = num
   def __str__(self,):
-    return "wire" + str(self.__num)
+    return "wire"
 
   def resistance(self):
     return self.__resistance
 
-  
+  def setRessistance(self,value):
+    self.__resistance = value
   def connect(self):
     col,row = self.__location
     grid = self.__map.Grid()
@@ -87,6 +87,12 @@ class Wire():
         self.__facing[1] = "UP"
     else:
       self.__facing[1] = bends[self.__facing[0]] 
+
+class Resistor(Wire):
+  def __init__(self,location,facing,map,resistance):
+    super().__init__(location,facing,map)
+    super().setRessistance(resistance)
+
 class Battery():
   def __init__(self,charge,map,location):
     self.__location = location

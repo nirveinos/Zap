@@ -1,5 +1,5 @@
 import pygame
-from puzzles import Battery,Wire,Gate
+from puzzles import Battery,Wire,Gate,Resistor
 pygame.init()
 
 class Map():
@@ -58,7 +58,10 @@ class Map():
             if item.Current():
               colour = "green"
             else:
-              colour = "blue"
+              if isinstance(item,Resistor):
+                colour = "coral3"
+              else:
+                colour = "blue"
             for direction in item.facing():
               match direction:
                 case "LEFT":

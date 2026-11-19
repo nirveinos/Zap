@@ -1,6 +1,6 @@
 import pygame
 from mapManager import Map,Wall
-from puzzles import Wire,Battery,Gate
+from puzzles import Wire,Battery,Gate,Resistor
 from Player import Player
 from puzzleManager import runLevel
 width,height = 800,600
@@ -12,13 +12,13 @@ pygame.display.update()
 mymap = Map(10,9)
 battery = Battery(10,mymap,(0,0))
 player = Player(mymap)
-wire1 = Wire((1, 0), ["LEFT", "RIGHT"], mymap,1)
-wire2 = Wire((2, 0), ["LEFT", "DOWN"], mymap,2)
-wire3 = Wire((2, 1), ["UP", "DOWN"], mymap,3)
-wire4 = Wire((2,2),["UP","DOWN"], mymap,4)
-wire5 = Wire((2,3),["UP","RIGHT"],mymap,5)
-wire6 = Wire((3,3),["LEFT","UP"],mymap,6)
-wire7 = Wire((3,2),["DOWN","UP"],mymap,7)
+wire1 = Wire((1, 0), ["LEFT", "DOWN"], mymap)
+wire2 = Wire((2, 0), ["LEFT", "RIGHT"], mymap)
+wire3 = Wire((2, 1), ["LEFT", "DOWN"], mymap)
+wire4 = Wire((2,2),["RIGHT","DOWN"], mymap)
+wire5 = Wire((2,3),["LEFT","RIGHT"],mymap)
+wire6 = Wire((3,3),["RIGHT","UP"],mymap)
+wire7 = Resistor((3,2),["LEFT","UP"],mymap,2)
 gate = Gate((3,1),mymap,3)
 wall1 = Wall(mymap,(1,1))
 mymap.updateWires()
