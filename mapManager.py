@@ -10,6 +10,13 @@ class Map():
     self.__cellSize = 100
     self.__offsety = 0
     self.__offsetx = 0
+
+    self.HorizontalWire = pygame.image.load("Assets/Horizontal_wire.png")
+    self.VerticalWire = pygame.image.load("Assets/Vertical_wire.png")
+    self.VerticalWireG = pygame.image.load("Assets/Vertical_wireG.png")
+    self.HorizontalWireG = pygame.image.load("Assets/Horizontal_WireG.png")
+    self.Horizontalresistor = pygame.image.load("Assets/HorizontalResistor.png")
+    self.VerticalResistor = pygame.image.load("Assets/Vertical_resistor.png")                                     
   def Grid(self):
     return self.__grid
   
@@ -43,6 +50,7 @@ class Map():
         if isinstance(thing,Wire):
           thing.connect()
   def drawGrid(self,screen):
+
     for row in range(self.__y + 1):
       y = (row * self.__cellSize) + self.__offsety
       pygame.draw.line(screen, "white", (self.__offsetx, y), (self.__offsetx + self.__x * self.__cellSize, y), 1)
@@ -50,38 +58,50 @@ class Map():
     for col in range(self.__x + 1):
       x = col * self.__cellSize + self.__offsetx
       pygame.draw.line(screen, "white", (x, self.__offsety), (x, self.__offsety + self.__y * self.__cellSize), 1)
-
+    resistor = False
+    horizontal = False
     for r,row in enumerate(self.__grid):
       for i,item in enumerate(row):
         if item:
           if isinstance(item,Wire):
-            if item.Current():
-              colour = "green"
+            if isinstance(item,Resistor):
+              resistor = True
             else:
-              if isinstance(item,Resistor):
-                colour = "coral3"
-              else:
-                colour = "blue"
+              resistor = False
             for direction in item.facing():
               match direction:
                 case "LEFT":
                   ox = 0
+                  horizontal = True
                   oy = (self.__cellSize - 10) / 2
-                  size = (self.__cellSize / 2, 10)
                 case "RIGHT":
                   ox = self.__cellSize / 2
                   oy = (self.__cellSize - 10) / 2
-                  size = (self.__cellSize / 2, 10)
+                  horizontal = True
                 case "DOWN":
                   oy = self.__cellSize / 2
                   ox = (self.__cellSize - 10) / 2
-                  size = (10, self.__cellSize / 2)  
+                  horizontal = False
                 case "UP":
                   oy = 0
                   ox = (self.__cellSize - 10) / 2
-                  size = (10, self.__cellSize / 2)
-              object = pygame.Surface(size)
-              object.fill(colour)
+                  horizontal = False
+              if resistor:
+                if horizontal:
+                  object = self.Horizontalresistor
+                else:
+                  object = self.VerticalResistor
+              else:
+                if horizontal:
+                  if item.Current():
+                    object = self.HorizontalWireG
+                  else:
+                    object = self.HorizontalWire
+                else:
+                  if item.Current():
+                    object = self.VerticalWireG
+                  else:
+                    object = self.VerticalWire
               screen.blit(object,((r)*self.__cellSize +   self.__offsetx + ox,(i)*self.__cellSize + self.__offsety + oy))
 
           elif isinstance(item,Battery):
