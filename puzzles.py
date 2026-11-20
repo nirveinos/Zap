@@ -140,3 +140,5 @@ class Gate():
   def reset(self):
     self.__needed = self.__chargerequired
     self.__opened = False
+  def Position(self):
+    return self.__location

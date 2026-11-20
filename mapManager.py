@@ -16,7 +16,8 @@ class Map():
     self.VerticalWireG = pygame.image.load("Assets/Vertical_wireG.png")
     self.HorizontalWireG = pygame.image.load("Assets/Horizontal_WireG.png")
     self.Horizontalresistor = pygame.image.load("Assets/HorizontalResistor.png")
-    self.VerticalResistor = pygame.image.load("Assets/Vertical_resistor.png")                                     
+    self.VerticalResistor = pygame.image.load("Assets/Vertical_resistor.png")  
+    self.BatteryImage = pygame.image.load("Assets/Battery.png")                                   
   def Grid(self):
     return self.__grid
   
@@ -105,12 +106,10 @@ class Map():
               screen.blit(object,((r)*self.__cellSize +   self.__offsetx + ox,(i)*self.__cellSize + self.__offsety + oy))
 
           elif isinstance(item,Battery):
-            object = pygame.Surface((60,60))
-            object.fill("green")
-            font = pygame.font.Font(None,32)
-            text = font.render(f"{item.discharge()}", True ,"black")
+            font = pygame.font.Font(None,30)
+            text = font.render(f"{item.discharge()}", True ,"white")
             textpos = text.get_rect(centerx=self.__cellSize * (r) + self.__offsetx + 50, y=self.__cellSize * (i) + self.__offsety + 50)
-            screen.blit(object,(self.__cellSize * (r) + self.__offsetx + 20,self.__cellSize * (i) + self.__offsety + 20))
+            screen.blit(self.BatteryImage,(self.__cellSize * (r) + self.__offsetx + 20,self.__cellSize * (i) + self.__offsety + 20))
             screen.blit(text,textpos)
           elif isinstance(item,Gate):
             object = pygame.Surface((60,60))

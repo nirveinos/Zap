@@ -13,6 +13,8 @@ class Player():
         self.__grid[0][0] = 1
         self.numrows = (800/self.__cellSize)-1
         self.numcols = (600/self.__cellSize)-1
+        self.Image = pygame.image.load("Assets/Robot.png")
+        self.Image = pygame.transform.scale(self.Image, (40, 40))
     def move(self, direction):
         dx, dy = direction
         row, col = self.__position
@@ -37,11 +39,9 @@ class Player():
                 self.numcols += 1               
             
     def drawPlayer(self,screen):
-        plyer = pygame.Surface((25,25))
-        plyer.fill("red")
         x,y = self.__position
         ox,oy = self.__map.Offset()
-        screen.blit(plyer,(x* self.__cellSize + self.__offsetx + ox, y * self.__cellSize + self.__offsety + oy))
+        screen.blit(self.Image,(x* self.__cellSize + self.__offsetx + ox, y * self.__cellSize + self.__offsety + oy))
 
     def __str__(self):
         return str(self.__grid)
