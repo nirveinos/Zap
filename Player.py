@@ -18,7 +18,6 @@ class Player():
     def move(self, direction):
         dx, dy = direction
         row, col = self.__position
-
         new_row = row + dx
         new_col = col + dy
         if (0 <= new_row < len(self.__grid) and

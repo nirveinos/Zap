@@ -3,7 +3,10 @@ from puzzleManager import runLevel
 from puzzles import Wire
 from levelmanager import levels
 pygame.init()
+buttonClick = pygame.mixer.Sound("Assets/buttonClick.mp3")
 def StartingScreen(display):
+    pygame.mixer.init()
+    
     startButton = pygame.image.load("Assets/playButton.png")
     startx = 100
     starty = 47
@@ -22,7 +25,11 @@ def StartingScreen(display):
             return started
         if event.type == pygame.MOUSEBUTTONDOWN:
             if button.collidepoint(event.pos):
+                buttonClick.play()
                 started = True
+        if event.type == pygame.KEYDOWN:
+          if event.key == pygame.K_F11:
+            pygame.display.toggle_fullscreen()
     display.fill("black")
     display.blit(startButton,(startingButtonx,startingButtony))
     display.blit(logo,(275,100))
@@ -69,11 +76,15 @@ def getInputs(player,battery,mymap,gate,test,previous,won):
               item = mymap.Grid()[px][py]
               if isinstance(item,Wire):
                 item.bendWire()
+          elif event.key == pygame.K_F11:
+             pygame.display.toggle_fullscreen()
     return True,test,previous,won
 
 def LevelMenu(display):
+    pygame.mixer.init()
     buttons = {}
-
+    closeButton = pygame.Rect(730,30,30,30)
+    
     for i, levelNumber in enumerate(levels.keys()):
         
         if int(levelNumber) <= 4:
@@ -98,9 +109,14 @@ def LevelMenu(display):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 for levelNumber, button in buttons.items():
                     if button.collidepoint(event.pos):
+                        buttonClick.play()
                         print(levelNumber)
                         return levelNumber
-
+                if closeButton.collidepoint(event.pos):
+                   return None
+            if event.type == pygame.KEYDOWN:
+               if event.key == pygame.K_F11:
+                  pygame.display.toggle_fullscreen()
         display.fill("black")
 
         for levelNumber, button in buttons.items():
@@ -109,6 +125,7 @@ def LevelMenu(display):
                 if levels[levelNumber]["completed"]:
                     colour = "green"
             pygame.draw.rect(display, colour, button)
+            pygame.draw.circle(display,"red",(745,45),15)
 
             text = font.render(
                 f"Level {levelNumber}", True, "white"
